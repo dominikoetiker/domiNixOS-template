@@ -1,0 +1,93 @@
+{
+  description = "Dominix OS personal settings";
+
+  inputs = {
+    # TODO: update the nixpkgs and home-manager inputs to point to the versions you want to use.
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    dominix.url = "github:dominikoetiker/domiNixOS";
+  };
+
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      dominix,
+      ...
+    }@inputs:
+    let
+      system = "x86_64-linux";
+      personal = import ./settings.nix;
+      userConfig = personal.userConfig;
+      machineConfig = personal.machineConfig;
+      hardwareConfig = personal.hardwareConfig;
+    in
+    {
+      nixosConfigurations = {
+        "${machineConfig.hostName}" = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit
+              inputs
+              personal
+              hardwareConfig
+              machineConfig
+              userConfig
+              ;
+          };
+          modules = [
+            # Hardware.
+            ./hardware-configuration.nix
+            ./crypt-uuid.nix
+
+            # TODO: Uncomment modules, you don't want or need.
+            dominix.nixosModules.base
+            dominix.nixosModules.gnome
+            dominix.nixosModules.displaylink
+            dominix.nixosModules.fonts
+            dominix.nixosModules.security_1password
+            dominix.nixosModules.git
+            dominix.nixosModules.user
+            dominix.nixosModules.nixvim
+            dominix.nixosModules.tmux
+            dominix.nixosModules.docker
+            dominix.nixosModules.virtualization
+            dominix.nixosModules.fingerprint
+            dominix.nixosModules.onedrive
+
+            # TODO: Chose either zsh or bash as your default shell. Uncomment the one you want and comment the other one out.
+            dominix.nixosModules.zsh
+            #dominix.nixosModules.bash
+
+            # Machine specific packages.
+            (
+              { pkgs, ... }:
+              {
+                environment.systemPackages = with pkgs; [
+                  # <-- TODO: Add any additional packages you want to be available on your system here.
+                ];
+              }
+            )
+
+            # Home Manager.
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {
+                inherit
+                  inputs
+                  personal
+                  userConfig
+                  machineConfig
+                  hardwareConfig
+                  ;
+              };
+            }
+          ];
+        };
+      };
+    };
+}
