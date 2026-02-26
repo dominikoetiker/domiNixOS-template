@@ -2,10 +2,13 @@
   description = "Dominix OS personal settings";
 
   inputs = {
-    # TODO: update the nixpkgs and home-manager inputs to point to the versions you want to use.
+    # TODO: To upgrade the system change the versions of nixpkgs, home-manager and nixvim.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
+    nixvim.url = "github:nix-community/nixvim/nixos-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    dominix.inputs.nixvim.follows = "nixvim";
     dominix.url = "github:dominikoetiker/domiNixOS";
   };
 
