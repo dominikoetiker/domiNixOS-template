@@ -249,7 +249,7 @@ manually download the driver.
 5. Once inside your beautiful new GNOME desktop, open your Terminal (where you
    can easily copy and paste!).
 6. Run the `nix-prefetch-url ...` command provided in the original error message.
-7. Uncomment the module in `~/.dominixos/flake.nix` and run `nix-update` (your
+7. Uncomment the module in `~/.dominixos/flake.nix` and run `nrs` (the
    alias for `sudo nixos-rebuild switch --flake ~/.dominixos`).
 
 ---
@@ -301,7 +301,7 @@ origin master`)_.
 
 ### 2. Updating Your Packages
 
-To update all your software (browsers, CLI tools, GNOME updates, etc.) to the
+To update all software (browsers, CLI tools, GNOME updates, etc.) to the
 latest versions within your current NixOS release channel, run:
 
 ```bash
@@ -310,7 +310,11 @@ nix flake update
 sudo nixos-rebuild switch --flake .
 ```
 
-_(Tip: You can use your custom `nix-update` alias to do the rebuild part!)_
+Or just shourthand:
+
+```bash
+nfu && nrs
+```
 
 ### 3. Upgrading to the Next NixOS Version
 
@@ -336,6 +340,12 @@ upgrading is incredibly simple.
    cd ~/.dominixos
    nix flake update
    sudo nixos-rebuild switch --flake .
+   ```
+
+   Or just shourthand:
+
+   ```bash
+   nfu && nrs
    ```
 
 4. **IMPORTANT:** Do _not_ change the `stateVersion` in your `settings.nix`!
