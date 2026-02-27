@@ -6,6 +6,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     nixvim.url = "github:nix-community/nixvim/nixos-25.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable"; # for packages that need frequently updates.
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     dominix.inputs.nixvim.follows = "nixvim";
@@ -22,6 +23,10 @@
     }@inputs:
     let
       system = "x86_64-linux";
+      pkgs-unstable = import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
       personal = import ./settings.nix;
       userConfig = personal.userConfig;
       machineConfig = personal.machineConfig;
@@ -38,6 +43,7 @@
               hardwareConfig
               machineConfig
               userConfig
+              pkgs-unstable
               ;
           };
           modules = [
