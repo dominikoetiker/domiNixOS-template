@@ -270,24 +270,26 @@ _(Note: It is completely safe to make this repository public. LUKS UUIDs and
 hardware configs are not secret data. Your actual passwords are safe in
 1Password or hashed in the OS.)_
 
-1. Go to GitHub and create a new repository (e.g., `my-nixos-config`).
+1. Go to GitHub and create a new, **completely empty** repository (e.g.,
+   `my-nixos-config`). Do not add a README or .gitignore yet!
 2. Open your terminal and navigate to your config folder:
 
    ```bash
    cd ~/.dominixos
    ```
 
-3. Remove the link to the original template repository:
+3. Rename the link to the original template repository from `origin` to
+   `upstream`. This allows us to fetch future updates from the template:
 
    ```bash
-   git remote remove origin
+   git remote rename origin upstream
    ```
 
-4. Link it to your new, empty repository (replace the URL with your actual repo
-   URL):
+4. Link it to your new, empty repository (replace the URL with your actual
+   repo URL):
 
    ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/my-nixos-config.git
+   git remote add origin [https://github.com/YOUR_USERNAME/my-nixos-config.git](https://github.com/YOUR_USERNAME/my-nixos-config.git)
    ```
 
 5. Push your personalized configuration up to GitHub:
@@ -296,10 +298,38 @@ hardware configs are not secret data. Your actual passwords are safe in
    git push -u origin main
    ```
 
-   _(If your local branch is named `master` instead of `main`, use `git push -u
-origin master`)_.
+   _(If your local branch is named `master` instead of `main`, use
+   `git push -u origin master`)_.
 
-### 2. Updating Your Packages
+### 2. Pulling Updates from the Template
+
+Whenever the public template gets updated with new features or modules, you
+can easily merge those changes into your personalized configuration without
+overwriting your `settings.nix`:
+
+1. Fetch the latest changes from the template:
+
+   ```bash
+   cd ~/.dominixos
+   git fetch upstream
+   ```
+
+2. Merge the changes into your local setup:
+
+   ```bash
+   git merge upstream/main
+   ```
+
+   _(Git will smartly merge new additions. If you modified the exact same
+   lines as the template update, Git will prompt you to resolve the merge
+   conflict manually.)_
+
+3. Push the updated configuration to your private repository:
+   ```bash
+   git push origin main
+   ```
+
+### 3. Updating Your Packages
 
 To update all software (browsers, CLI tools, GNOME updates, etc.) to the
 latest versions within your current NixOS release channel, run:
@@ -316,7 +346,7 @@ Or just shourthand:
 nfu && nrs
 ```
 
-### 3. Upgrading to the Next NixOS Version
+### 4. Upgrading to the Next NixOS Version
 
 When a new version of NixOS drops (e.g., moving from `25.11` to `26.05`),
 upgrading is incredibly simple.
