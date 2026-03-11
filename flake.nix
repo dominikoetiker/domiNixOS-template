@@ -68,6 +68,7 @@
             dominix.nixosModules.ghostty
 
             # TODO: Chose either zsh or bash as your default shell. Uncomment the one you want and comment the other one out.
+            dominix.nixosModules.starship
             dominix.nixosModules.zsh
             #dominix.nixosModules.bash
 
