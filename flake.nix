@@ -66,6 +66,7 @@
             dominix.nixosModules.fingerprint
             dominix.nixosModules.onedrive
             dominix.nixosModules.ghostty
+            dominix.nixosModules.thunderbird
 
             # TODO: Chose either zsh or bash as your default shell. Uncomment the one you want and comment the other one out.
             dominix.nixosModules.starship
