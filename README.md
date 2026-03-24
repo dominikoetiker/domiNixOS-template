@@ -331,19 +331,34 @@ overwriting your `settings.nix`:
 
 ### 3. Updating Your Packages
 
-To update all software (browsers, CLI tools, GNOME updates, etc.) to the
-latest versions within your current NixOS release channel, run:
+domiNixOS includes a custom, three-step workflow to safely update your system,
+review changes before applying them, and track package versions using Git.
+
+**Step 1: Check for Updates and Build**
+Run the update check command. This will update your `flake.lock`, build the new
+system in the background, and show you a detailed list of all package upgrades
+and downgrades:
 
 ```bash
-cd ~/.dominixos
-nix flake update
-sudo nixos-rebuild switch --flake .
+nuc
 ```
 
-Or just shourthand:
+**Step 2: Apply the Updates**
+Review the list of changes. If everything looks correct, apply the update.
+Because the system was already compiled in the previous step, this will only
+take a few seconds:
 
 ```bash
-nfu && nrs
+nrs
+```
+
+**Step 3: Commit the Changes**
+To keep your configuration history clean and reproducible, automatically commit
+the updated `flake.lock`. This script generates a detailed commit message
+containing the exact list of changed packages:
+
+```bash
+nco
 ```
 
 ### 4. Upgrading to the Next NixOS Version
