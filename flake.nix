@@ -64,11 +64,11 @@
             dominix.nixosModules.docker
             dominix.nixosModules.virtualization
             dominix.nixosModules.fingerprint
-            dominix.nixosModules.onedrive
+            # dominix.nixosModules.onedrive
             dominix.nixosModules.ghostty
-            dominix.nixosModules.thunderbird
+            # dominix.nixosModules.thunderbird
             dominix.nixosModules.gemini-cli
-            dominix.nixosModules.libreoffice
+            # dominix.nixosModules.libreoffice
             dominix.nixosModules.structurizr-cli
 
             # TODO: Chose either zsh or bash as your default shell. Uncomment the one you want and comment the other one out.
