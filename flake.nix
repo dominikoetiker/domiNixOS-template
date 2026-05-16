@@ -65,6 +65,7 @@
             dominix.nixosModules.virtualization
             dominix.nixosModules.fingerprint
             # dominix.nixosModules.onedrive
+            dominix.nixosModules.gdrive
             dominix.nixosModules.ghostty
             # dominix.nixosModules.thunderbird
             dominix.nixosModules.gemini-cli
