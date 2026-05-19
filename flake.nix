@@ -72,6 +72,7 @@
             # dominix.nixosModules.libreoffice
             dominix.nixosModules.onlyoffice
             dominix.nixosModules.structurizr-cli
+            dominix.nixosModules.antigravity
 
             # TODO: Chose either zsh or bash as your default shell. Uncomment the one you want and comment the other one out.
             dominix.nixosModules.starship
